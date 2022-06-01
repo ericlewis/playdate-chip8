@@ -52,6 +52,25 @@ function listview:drawCell(section, row, column, selected, x, y, width, height)
     Graphics.drawTextInRect("*"..menuOptions[row]:gsub(".ch8", "").."*", x+10, y+(11), width, height, nil, "...", kTextAlignment.left)
 end
 
+local inputHandlers
+
+inputHandlers = {
+    upButtonUp = function()
+        listview:selectPreviousRow(true)
+    end,
+    downButtonUp = function()
+        listview:selectNextRow(true)
+    end,
+    AButtonUp = function()
+        playdate.inputHandlers.pop()
+        state = running
+        loadRom("roms/"..menuOptions[listview:getSelectedRow()])
+        addMenuItems()
+    end
+}
+
+playdate.inputHandlers.push(inputHandlers)
+
 local showFPS = false
 local function addMenuItems()
     Menu:addMenuItem("exit", function()
@@ -77,25 +96,6 @@ local function addMenuItems()
         showFPS = show
     end)
 end
-
-local inputHandlers
-
-inputHandlers = {
-    upButtonUp = function()
-        listview:selectPreviousRow(true)
-    end,
-    downButtonUp = function()
-        listview:selectNextRow(true)
-    end,
-    AButtonUp = function()
-        playdate.inputHandlers.pop()
-        state = running
-        loadRom("roms/"..menuOptions[listview:getSelectedRow()])
-        addMenuItems()
-    end
-}
-
-playdate.inputHandlers.push(inputHandlers)
 
 function playdate.update()
     if state == running then
