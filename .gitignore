@@ -56,3 +56,4 @@ dkms.conf
 build/
 *.pdx
 .nova
+Source/pdex.*
