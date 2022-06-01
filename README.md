@@ -1,5 +1,5 @@
 # playdate-chip8
-Chip-8 emulator for playdate
+Chip-8 emulator for playdate. It has been so long that I don't remember where I found the C code for this, if someone locates it - I will update the readme.
 
 ## Controls
 * Left Arrow: move left on keyboard
