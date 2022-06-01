@@ -34,6 +34,14 @@ listview:setNumberOfRows(#menuOptions)
 listview:setCellPadding(0, 0, 8, 0)
 listview:setContentInset(8, 8, 0, 0)
 
+Menu:addCheckmarkMenuItem("inverted", false, function(inv)
+    Display.setInverted(inv)
+end)
+
+Menu:addCheckmarkMenuItem("show fps", showFPS, function(show)
+    showFPS = show
+end)
+
 function listview:drawCell(section, row, column, selected, x, y, width, height)
     if selected then
         Graphics.fillRoundRect(x, y, width, height, 4)
@@ -45,11 +53,20 @@ function listview:drawCell(section, row, column, selected, x, y, width, height)
 end
 
 local showFPS = false
-local function addMenuButton()
+local function addMenuItems()
     Menu:addMenuItem("exit", function()
         state = idle
         playdate.inputHandlers.push(inputHandlers)
         Menu:removeAllMenuItems()
+        
+        Menu:addCheckmarkMenuItem("inverted", false, function(inv)
+            Display.setInverted(inv)
+        end)
+        
+        Menu:addCheckmarkMenuItem("show fps", showFPS, function(show)
+            showFPS = show
+        end)
+        
         Graphics.clear()
         listview:drawInRect(0, 0, 400, 240)
     end)
@@ -74,7 +91,7 @@ inputHandlers = {
         playdate.inputHandlers.pop()
         state = running
         loadRom("roms/"..menuOptions[listview:getSelectedRow()])
-        addMenuButton()
+        addMenuItems()
     end
 }
 
